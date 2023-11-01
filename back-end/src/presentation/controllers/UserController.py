@@ -2,8 +2,8 @@ from flask import request, json, Response
 from flask_restx import Resource, fields
 from flask_restx.utils import default_id
 
-from models.user import UserModel
-from schemas.user import UserSchema
+from domain.models.user import UserModel
+from insfrastructure.schemas.user import UserSchema
 
 from server.instance import server
 

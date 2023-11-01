@@ -32,6 +32,9 @@ class CheckCep:
         # print(cep_json)
         # return cep_json
         hehe = requests.get(f"https://viacep.com.br/ws/{cep_json['cep']}/json/")
+
+        if hehe.status_code == 400:
+            return {'message': 'CEP inválido'}, 401
         address_cep = hehe.json()
         # return  address_cep['uf']
         if address_cep['uf'] in ufs_authorized:
@@ -65,7 +68,7 @@ class CheckCep:
                 'complemento' : address_cep['complemento'],
             }, 200
         else:
-            return {'message': "Cep Inválido"}, 401
+            return {'message': "Válido apenas CEP do Amazonas"}, 401
             
 
 class CepModelView():

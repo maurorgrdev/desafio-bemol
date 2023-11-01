@@ -1,5 +1,5 @@
-from controllers.UserController import User, UserList
-from controllers.AddressController import Address, AddressList
+from presentation.controllers.UserController import User, UserList
+from presentation.controllers.AddressController import Address, AddressList
 
 from flask import jsonify
 

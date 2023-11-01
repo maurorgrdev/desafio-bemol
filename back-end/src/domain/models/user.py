@@ -1,6 +1,6 @@
 from enum import unique
 from db import db
-from models.address import AddressModel
+from domain.models.address import AddressModel
 from marshmallow import fields
 
 class UserModel(db.Model):

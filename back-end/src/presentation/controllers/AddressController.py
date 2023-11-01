@@ -3,8 +3,8 @@ from flask_restx import Resource, fields
 from flask_restx.utils import default_id
 import requests
 
-from models.address import AddressModel
-from schemas.address import AddressSchema
+from domain.models.address import AddressModel
+from insfrastructure.schemas.address import AddressSchema
 
 from server.instance import server
 
@@ -62,7 +62,8 @@ class Address(Resource):
 
         if address_data:
             address_data.delete_from_db()
-            return '', 204
+        
+        return {'message': 'Registro excluido com sucesso'}, 201
 
 class AddressList(Resource):
     def get(self):

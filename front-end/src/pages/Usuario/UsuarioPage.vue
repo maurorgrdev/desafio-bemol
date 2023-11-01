@@ -1,19 +1,38 @@
 <template>
     <q-page>
+        <q-dialog v-model="showDialogDeleteEndereco" persistent>
+            <q-card
+              style="width: 600px; max-width: 80vw;"
+            >
+                <q-card-section>
+                    <h6>O endereco selecionado será excluído. Confirmar ação?</h6>
+                </q-card-section>
+                <q-card-actions class="row text-primary">
+                    <q-space />
+                    <q-btn @click="showDialogDeleteEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
+                    <q-btn @click="confirmDeleteEndereco()" style=" width: 150px;" color="primary" label="Confirmar" />
+                </q-card-actions>  
+            </q-card>
+        </q-dialog>
+
         <q-dialog v-model="showDialogNovoEndereco" persistent>
             <q-card
               style="width: 1000px; max-width: 80vw;"
             >
+                <div class="title q-pa-sm">
+                    <div class="text-h6">Novo Endereço</div>
+                    <div class="text-subtitle2">Cadastro de endereço</div>
+                </div>
                 <q-form class="q-gutter-md">
                     <div class="row">
                         <div class="q-pa-sm col-4">
-                            <q-input outlined bottom-slots v-model="novo_endereco.cep" label="CEP *" counter maxlength="8" dense :rules="[ 
+                            <q-input outlined bottom-slots v-model="novo_endereco.cep" mask="#####-###" label="CEP *" counter maxlength="9" dense :rules="[ 
                                 val => val && val.length > 0 || 
                                 'Obrigatório'
                             ]">     
                         
                                 <template v-slot:after>
-                                  <q-btn @click="validar_cep()" round dense flat icon="place" />
+                                  <q-btn color="primary" @click="validar_cep(novo_endereco.cep)" round dense flat icon="place" />
                                 </template>
                             </q-input>
                         </div>
@@ -109,7 +128,7 @@
                         </div>
                     </div>
                 </q-form>
-                <q-card-actions class="row text-primary" style="padding-left: 15px; padding-right: 15px;">
+                <q-card-actions class="row text-primary">
                     <q-space />
                     <q-btn @click="showDialogNovoEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
                     <q-btn @click="clickSalvarNovoEndereco" style=" width: 150px;" color="primary" label="Salvar" />
@@ -121,6 +140,10 @@
             <q-card
               style="width: 1000px; max-width: 80vw;"
             >
+                <div class="title q-pa-md">
+                    <div class="text-h6">Endereços</div>
+                    <div class="text-subtitle2">Lista dos endereços de {{user_enderecos.name}}</div>
+                </div>
                 <div class="q-pa-md">
                     <q-table
                     flat bordered 
@@ -141,8 +164,7 @@
                                     {{ props.row.logradouro }}
                                 </q-td>
                                 <q-td key="actions" :props="props">
-                                    <q-btn  icon="mode_edit" @click="teste()"></q-btn>
-                                    <q-btn  icon="delete" @click="teste()"></q-btn>
+                                    <q-btn icon="delete" @click="openDialogDeleteEndereco(props.row)"></q-btn>
                                 </q-td>
                             </q-tr>
                         </template>
@@ -216,6 +238,7 @@ export default {
         return {
             showDialogListaEndereco: false,
             showDialogNovoEndereco: false,
+            showDialogDeleteEndereco: false,
 
             user_enderecos: {},
 
@@ -249,6 +272,8 @@ export default {
                 { name: 'logradouro', align: 'center', label: 'Dados endereço', field: 'logradouro', sortable: true },
                 { name: 'actions', align: 'center', label: 'Ações'},
             ],
+
+            endereco_delete: {},
         }   
     },
 
@@ -258,39 +283,48 @@ export default {
 
     methods: {
         async clickSalvarNovoEndereco(){
-            const dados_endereco = {
-                ...this.novo_endereco,
-                user_id: this.user_enderecos.id,
-            }
+            // const response_cep = await this.addressStore.validarCEP(this.novo_endereco.cep)
 
-            const response_endereco = await this.addressStore.create(dados_endereco);
-
-            if(response_endereco.status === 201){
-                await this.usuarioStore.loadUsuario(this.user_enderecos.id);
-
-                this.user_enderecos = {
-                    ...this.usuarioStore.getUsuario
+            if(await this.validar_cep(this.novo_endereco.cep)){
+                const dados_endereco = {
+                    ...this.novo_endereco,
+                    user_id: this.user_enderecos.id,
                 }
 
-                this.showDialogNovoEndereco = false
-            } else {
-                alert('nao deu pra adicionar')
-            }
+                const response_endereco = await this.addressStore.create(dados_endereco);
+
+                if(response_endereco.status === 201){
+                    await this.usuarioStore.loadUsuario(this.user_enderecos.id);
+
+                    this.user_enderecos = {
+                        ...this.usuarioStore.getUsuario
+                    }
+
+                    this.showDialogNovoEndereco = false
+                } else {
+                    alert('nao deu pra adicionar')
+                }
+            } 
         },  
 
-        async validar_cep(){
-            const response_cep = await this.addressStore.validarCEP(this.novo_endereco.cep);
+        async validar_cep(cep){
+            const response_cep = await this.addressStore.validarCEP(cep);
 
-            if(response_cep){
+            console.log(response_cep)
+            if(response_cep.status === 200){
                 this.novo_endereco = {
                     ...this.novo_endereco,
-                    logradouro: response_cep.logradouro,
-                    bairro: response_cep.bairro,
-                    uf: response_cep.uf,
-                    localidade: response_cep.localidade,
+                    logradouro: response_cep.data.logradouro,
+                    bairro: response_cep.data.bairro,
+                    uf: response_cep.data.uf,
+                    localidade: response_cep.data.localidade,
                 }
+
+                return true
             } else {
-                alert('cep inválido')
+                alert(response_cep.data.message)
+
+                return false
             }
         },  
 
@@ -317,7 +351,29 @@ export default {
             }
 
             this.showDialogListaEndereco = true;
-        }
+        },
+
+        openDialogDeleteEndereco(endereco){
+            this.endereco_delete = {...endereco}
+
+            this.showDialogDeleteEndereco = true;
+        },
+
+        async confirmDeleteEndereco(){
+            const response = await this.addressStore.delete(this.endereco_delete.id);
+
+            if(response.status == 201){
+                await this.usuarioStore.loadUsuario(this.user_enderecos.id);
+
+                this.user_enderecos = {
+                    ...this.usuarioStore.getUsuario
+                }
+
+                this.showDialogDeleteEndereco = false
+            } else {
+                alert('Error ao excluir endereço')
+            }
+        },
     }
 }
 

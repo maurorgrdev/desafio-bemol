@@ -20,9 +20,10 @@ export const useAddressStore = defineStore("address", {
                 }
                 const response = await api.post('/check-cep', data)
 
-                return response.data
+                return response
+
             } catch (error) {
-                alert(error)
+                return error.response
             }
         },
 
@@ -59,9 +60,9 @@ export const useAddressStore = defineStore("address", {
             try {
                 const result = await api.delete(`/addresses/${id}`)
 
-                return result.data
+                return result
             } catch (error) {
-                alert(error)
+                return error.response
             }
         }
     }

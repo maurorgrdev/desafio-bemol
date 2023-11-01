@@ -2,7 +2,7 @@ from flask_sqlalchemy import model
 from marshmallow_sqlalchemy import load_instance_mixin, fields
 from marshmallow import EXCLUDE
 from ma import ma
-from models.address import AddressModel
+from domain.models.address import AddressModel
 
 class AddressSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
