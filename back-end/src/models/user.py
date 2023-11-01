@@ -8,11 +8,11 @@ class UserModel(db.Model):
 
     id               = db.Column(db.Integer, primary_key=True)
     name             = db.Column(db.String(80), nullable=False, unique=True)
-    cpf              = db.Column(db.String(11), nullable=False, unique=True)
-    email            = db.Column(db.String(80), nullable=False, unique=True)
-    password         = db.Column(db.String(12), nullable=False, unique=False)
-    confirm_email    = db.Column(db.String(80), nullable=False, unique=False)
-    confirm_password = db.Column(db.String(12), nullable=False, unique=False)
+    cpf              = db.Column(db.String(14), nullable=False, unique=True)
+    email            = db.Column(db.String(60), nullable=False, unique=True)
+    password         = db.Column(db.String(60), nullable=False, unique=False)
+    confirm_email    = db.Column(db.String(60), nullable=False, unique=False)
+    confirm_password = db.Column(db.String(60), nullable=False, unique=False)
     data_nascimento  = db.Column(db.DateTime, nullable=False)
     addresses        = db.relationship(AddressModel, backref='users', lazy=True)
     

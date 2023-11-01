@@ -143,12 +143,21 @@
 import { useUsuarioStore } from 'src/stores/usuario';
 
 export default {
+    props: ['usuario_id'],
+
+
     setup(){
         const usuarioStore = useUsuarioStore()
 
         return {
             usuarioStore,
         }
+    },
+
+    async mounted() {
+        await this.usuarioStore.loadUsuario(this.usuario_id);
+
+        this.dadosUsuario = {...this.usuarioStore.getUsuario}
     },
 
     data() {
@@ -180,7 +189,7 @@ export default {
 
         async clickSubmit(){
             if(await this.validarFormulario_NovoUsuario()){
-                let response = this.usuarioStore.create(this.dadosUsuario)
+                let response = await this.usuarioStore.update(this.dadosUsuario)
 
                 this.$router.push('/usuarios')
 

@@ -7,7 +7,7 @@
                 <q-form class="q-gutter-md">
                     <div class="row">
                         <div class="q-pa-sm col-4">
-                            <q-input outlined bottom-slots v-model="novo_endereco.cep" label="CEP" counter maxlength="8" dense :rules="[ 
+                            <q-input outlined bottom-slots v-model="novo_endereco.cep" label="CEP *" counter maxlength="8" dense :rules="[ 
                                 val => val && val.length > 0 || 
                                 'Obrigatório'
                             ]">     
@@ -160,9 +160,13 @@
         </q-dialog>
 
         <div class="q-pa-xl">
+            <div class="title q-py-xl">
+                <div class="text-h6">Usuários</div>
+                <div class="text-subtitle2">Cadastrado de usuários</div>
+            </div>
+
             <q-table
-            flat bordered 
-            title="Treats" 
+             bordered 
             :rows="usuarioStore.getUsuarios" 
             :columns="columns" 
             row-key="id" 
@@ -179,8 +183,8 @@
                             {{ props.row.email }}
                         </q-td>
                         <q-td key="actions" :props="props">
-                            <q-btn  icon="mode_edit" @click="teste()"></q-btn>
-                            <q-btn  icon="map" @click="openDialogListarEndereco(props.row)"></q-btn>
+                            <q-btn round icon="mode_edit" @click="$router.push(`/usuarios/edita/${props.row.id}`)"></q-btn>
+                            <q-btn round icon="map" @click="openDialogListarEndereco(props.row)"></q-btn>
                         </q-td>
                     </q-tr>
                 </template>

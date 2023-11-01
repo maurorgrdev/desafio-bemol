@@ -12,7 +12,8 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Usuario/UsuarioPage.vue') },
-      { path: 'novo', component: () => import('pages/Usuario/NovoUsuarioPage.vue') }
+      { path: 'novo', component: () => import('pages/Usuario/NovoUsuarioPage.vue') },
+      { path: 'edita/:usuario_id', component: () => import('pages/Usuario/EditaUsuarioPage.vue'), props: true},
     ]
   },
   // Always leave this as last one,

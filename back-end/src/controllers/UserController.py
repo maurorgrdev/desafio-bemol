@@ -46,6 +46,8 @@ class User(Resource):
         user_data.confirm_email    = user_json['confirm_email'   ]
         user_data.confirm_password = user_json['confirm_password']
         user_data.data_nascimento  = user_json['data_nascimento']
+        # user_data = user_schema.load(user_json)
+        user_data.save_to_db()
 
         return user_schema.dump(user_data), 200
     

@@ -6,7 +6,7 @@ class AddressModel(db.Model):
 
     id          = db.Column(db.Integer   , primary_key=True)
     uf          = db.Column(db.String(2) , nullable=False)
-    cep         = db.Column(db.String(8) , nullable=False)
+    cep         = db.Column(db.String(9) , nullable=False)
     tipo        = db.Column(db.String(80), nullable=False)
     bairro      = db.Column(db.String(80), nullable=False)
     numero      = db.Column(db.String(80), nullable=False)

@@ -10,11 +10,23 @@ export const useUsuarioStore = defineStore("usuario", {
 
     getters: {
         getUsuario(state){
-            return state.usuario
+            let copyUsuario = state.usuario
+
+            return {
+                ...copyUsuario,
+                data_nascimento: moment(copyUsuario.data_nascimento +' 00:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MMYYYY HH:mm:ss')
+            }
         },
 
         getUsuarios(state){
-            return state.usuarios
+            let copyUsuarios = state.usuarios.map((usuario) => {
+                return {
+                    ...usuario,
+                    data_nascimento: moment(usuario.data_nascimento +' 00:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD/MMYYYY HH:mm:ss')
+                }
+            })
+
+           return copyUsuarios
         },
     },
 
@@ -57,7 +69,17 @@ export const useUsuarioStore = defineStore("usuario", {
 
         async update(data){
             try {
-                const response = await api.post(`/users/${data.id}`, data)
+                let data_nascimento_formated = moment(data.data_nascimento +' 00:00:00', 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
+                
+                const request = {
+                    ...data,
+                    data_nascimento: data_nascimento_formated,
+                }
+
+                console.log(request);
+                console.log('hehe');
+
+                const response = await api.put(`/users/${data.id}`, request)
 
                 return response
             } catch (error) {
