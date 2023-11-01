@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { api } from 'boota/axios'
+import { api } from 'boot/axios'
 
 export const useAddressStore = defineStore("address", {
     state: () => ({
@@ -13,6 +13,19 @@ export const useAddressStore = defineStore("address", {
     },
 
     actions: {
+        async validarCEP(cep){
+            try {
+                const data = {
+                    'cep': cep
+                }
+                const response = await api.post('/check-cep', data)
+
+                return response.data
+            } catch (error) {
+                alert(error)
+            }
+        },
+
         async loadAddress(id){
             try {
                 const response = await api.get(`/addresses/${id}`)
@@ -25,8 +38,10 @@ export const useAddressStore = defineStore("address", {
         async create(data){
             try {
                 const response = await api.post('/addresses', data)
+
+                return response
             } catch (error) {
-                alert(error)
+                return error.response
             }
         },
 

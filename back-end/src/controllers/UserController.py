@@ -1,4 +1,4 @@
-from flask import request 
+from flask import request, json, Response
 from flask_restx import Resource, fields
 from flask_restx.utils import default_id
 
@@ -19,6 +19,7 @@ item = user_ns.model('User', {
     'password'         : fields.String(description='User password'        ),
     'confirm_email'    : fields.String(description='User confirm email'   ),
     'confirm_password' : fields.String(description='User confirm password'),
+    'data_nascimento'  : fields.DateTime(description='User data nascimento'),
 })
 
 ITEM_NOT_FOUND = 'User not found'
@@ -44,6 +45,7 @@ class User(Resource):
         user_data.password         = user_json['password'        ]
         user_data.confirm_email    = user_json['confirm_email'   ]
         user_data.confirm_password = user_json['confirm_password']
+        user_data.data_nascimento  = user_json['data_nascimento']
 
         return user_schema.dump(user_data), 200
     
@@ -67,8 +69,44 @@ class UserList(Resource):
         user_json = request.get_json()
         user_data = user_schema.load(user_json)
 
+        check_cpf = UserModel.find_by_cpf(user_data.cpf)
+        if check_cpf:
+            return Response(
+                response=json.dumps({
+                    "message": "CPF já cadastrado"
+                }),
+                status=401,
+                mimetype="application/json"
+            )
+        
+        check_email = UserModel.find_by_email(user_data.email)
+        if check_email:
+            return Response(
+                response=json.dumps({
+                    "message": "E-mail já cadastrado"
+                }),
+                status=401,
+                mimetype="application/json"
+            )
+        
+        check_nome = UserModel.find_by_name(user_data.name)
+        if check_nome:
+            return Response(
+                response=json.dumps({
+                    "message": "Nome Completo já cadastrado"
+                }),
+                status=401,
+                mimetype="application/json"
+            )
+
         user_data.save_to_db()
 
-        return user_schema.dump(user_data), 201
+        return Response(
+            response=json.dumps({
+                "message": "Registro feito com sucesso"
+            }),
+            status=201,
+            mimetype="application/json"
+        )
 
         

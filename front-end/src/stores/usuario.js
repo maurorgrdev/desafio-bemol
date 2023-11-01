@@ -1,38 +1,39 @@
 import { defineStore } from 'pinia'
 import { api } from 'boot/axios'
+import moment from 'moment';
 
-export const useClienteStore = defineStore("cliente", {
+export const useUsuarioStore = defineStore("usuario", {
     state: () => ({
-        cliente: {},
-        clientes: [], 
+        usuario: {},
+        usuarios: [], 
     }),
 
     getters: {
-        getCliente(state){
-            return state.cliente
+        getUsuario(state){
+            return state.usuario
         },
 
-        getClientes(state){
-            return state.clientes
+        getUsuarios(state){
+            return state.usuarios
         },
     },
 
     actions: {
-        async loadClientes(){
+        async loadUsuarios(){
             try {
                 const result = await api.get('/users')
 
-                this.clientes = result.data
+                this.usuarios = result.data
             } catch (error) {
                 alert(error)
             }
         },
 
-        async loadCliente(id){
+        async loadUsuario(id){
             try {
                 const result = await api.get(`/users/${id}`)
 
-                this.cliente = result.data
+                this.usuario = result.data
             } catch (error) {
                 alert(error)
             }
@@ -40,11 +41,17 @@ export const useClienteStore = defineStore("cliente", {
 
         async create(data){
             try {
-                const response = await api.post(`/users`, data)
+                let data_nascimento_formated = moment(data.data_nascimento +' 00:00:00', 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
 
-                return response
+                const request = {
+                    ...data,
+                    data_nascimento: data_nascimento_formated,
+                }
+                const response = await api.post(`/users`, request)
+
+                return response.data
             } catch (error) {
-                alert(error)
+                return error.response
             }
         },
 

@@ -13,19 +13,21 @@ class UserModel(db.Model):
     password         = db.Column(db.String(12), nullable=False, unique=False)
     confirm_email    = db.Column(db.String(80), nullable=False, unique=False)
     confirm_password = db.Column(db.String(12), nullable=False, unique=False)
+    data_nascimento  = db.Column(db.DateTime, nullable=False)
     addresses        = db.relationship(AddressModel, backref='users', lazy=True)
     
     
-    def __init__(self, name, cpf, email, confirm_email, password, confirm_password):
+    def __init__(self, name, cpf, email, confirm_email, password, confirm_password, data_nascimento):
         self.name = name
         self.cpf = cpf
         self.email = email
         self.confirm_email = confirm_email
         self.password = password
         self.confirm_password = confirm_password
+        self.data_nascimento = data_nascimento
 
     def __repr__(self):
-        return f'UserModel(name = {self.name}, cpf = {self.cpf}, email = {self.email}, confirm_email = {self.confirm_email}, password = {self.password}, confirm_password = {self.confirm_password})'
+        return f'UserModel(name = {self.name}, cpf = {self.cpf}, email = {self.email}, confirm_email = {self.confirm_email}, password = {self.password}, confirm_password = {self.confirm_password}, data_nascimento={self.data_nascimento})'
     
     def json(self):
         return {
@@ -35,8 +37,9 @@ class UserModel(db.Model):
             'confirm_email' : self.confirm_email,
             'password' : self.password,
             'confirm_password' : self.confirm_password,
+            'data_nascimento': self.data_nascimento,
         }
-    
+
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
