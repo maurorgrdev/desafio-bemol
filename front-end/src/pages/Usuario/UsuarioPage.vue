@@ -16,7 +16,7 @@
                             ]">     
                         
                                 <template v-slot:after>
-                                  <q-btn disable color="primary" @click="validar_cep(endereco_visualizado.cep)" round dense flat icon="place" />
+                                  <q-btn disable color="primary" @click="validar_cep(endereco_visualizado.cep)" round dense flat icon="place"><q-tooltip> Buscar CEP </q-tooltip></q-btn>
                                 </template>
                             </q-input>
                         </div>
@@ -162,7 +162,7 @@
                             ]">     
                         
                                 <template v-slot:after>
-                                  <q-btn color="primary" @click="validar_cep(novo_endereco.cep)" round dense flat icon="place" />
+                                  <q-btn color="primary" @click="validar_cep(novo_endereco.cep)" round dense flat icon="place"><q-tooltip> Buscar CEP </q-tooltip></q-btn>
                                 </template>
                             </q-input>
                         </div>
@@ -287,8 +287,8 @@
                                     {{ props.row.logradouro }}
                                 </q-td>
                                 <q-td key="actions" :props="props">
-                                    <q-btn color="blue-5" class="q-mr-md" size="sm" icon="visibility" @click="openDialogVisualizaEndereco(props.row)"></q-btn>
-                                    <q-btn color="red-5" class="q-mr-md" size="sm" icon="delete" @click="openDialogDeleteEndereco(props.row)"></q-btn>
+                                    <q-btn color="blue-5" class="q-mr-md" size="sm" icon="visibility" @click="openDialogVisualizaEndereco(props.row)"><q-tooltip> Visualizar Endereço </q-tooltip></q-btn>
+                                    <q-btn color="red-5" class="q-mr-md" size="sm" icon="delete" @click="openDialogDeleteEndereco(props.row)"><q-tooltip> Deletar Endereço </q-tooltip></q-btn>
                                 </q-td>
                             </q-tr>
                         </template>
@@ -329,10 +329,10 @@
                             {{ props.row.email }}
                         </q-td>
                         <q-td key="actions" :props="props">
-                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="add_location_alt" @click="openDialogListarEndereco(props.row)"></q-btn>
-                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="mode_edit" @click="$router.push(`/usuarios/edita/${props.row.id}`)"></q-btn>
-                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="visibility" @click="$router.push(`/usuarios/visualiza/${props.row.id}`)"></q-btn>
-                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="delete" @click="openDialogDeleteUsuario(props.row)"></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="add_location_alt" @click="openDialogListarEndereco(props.row)"><q-tooltip> Listar Endereços </q-tooltip></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="mode_edit" @click="$router.push(`/usuarios/edita/${props.row.id}`)"><q-tooltip> Editar Usuário </q-tooltip></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="visibility" @click="$router.push(`/usuarios/visualiza/${props.row.id}`)"><q-tooltip> Visualizar Usuário </q-tooltip></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="delete" @click="openDialogDeleteUsuario(props.row)"><q-tooltip> Deletar Usuário </q-tooltip></q-btn>
 
                         </q-td>
                     </q-tr>

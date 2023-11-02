@@ -224,7 +224,7 @@
                                 {{ props.row.logradouro }}
                             </q-td>
                             <q-td key="actions" :props="props">
-                                <q-btn color="blue-5" class="q-mr-md" size="sm" icon="visibility" @click="openDialogVisualizaEndereco(props.row)"></q-btn>
+                                <q-btn color="blue-5" class="q-mr-md" size="sm" icon="visibility" @click="openDialogVisualizaEndereco(props.row)"><q-tooltip> Visualizar Endereço </q-tooltip></q-btn>
                             </q-td>
                         </q-tr>
                     </template>

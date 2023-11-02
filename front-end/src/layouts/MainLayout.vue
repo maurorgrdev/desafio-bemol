@@ -28,10 +28,17 @@
         <q-item-label
           header
         >
-          MENU
+          <div class="row justify-center">
+            <q-avatar size="80px" font-size="52px" color="blue-5" text-color="white" icon="account_circle" />
+          </div>
         </q-item-label>
-        <q-item clickable>
-          <q-item-section @click="$router.push('/usuarios')">USUARIOS</q-item-section>
+        <q-item clickable @click="$router.replace('/usuarios')">
+          <q-item-section avatar>
+            <q-avatar icon="groups" color="primary" text-color="white" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label > <span class="text-weight-bold"> Usuarios </span></q-item-label>
+          </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
