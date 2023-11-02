@@ -8,7 +8,7 @@
 
 ---
 
-<p align="center"> Projeto desenvolvido para o desafio Bemol A feature consiste no cadastro de usuários e endereços.
+<p align="center"> Projeto desenvolvido para o desafio Bemol. A feature consiste no cadastro de usuários e endereços.
     <br> 
 </p>
 
