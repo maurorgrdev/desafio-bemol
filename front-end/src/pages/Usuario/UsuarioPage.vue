@@ -1,22 +1,152 @@
 <template>
     <q-page>
+        <q-dialog v-model="showDialogVisualizaEndereco" persistent>
+            <q-card class="q-pa-md"
+              style="width: 1000px; max-width: 80vw;"
+            >
+                <div class="title q-pa-sm">
+                    <div class="text-h6">Visualização de Endereço</div>
+                </div>
+                <q-form class="q-gutter-md">
+                    <div class="row">
+                        <div class="q-pa-xs col-4">
+                            <q-input disable outlined bottom-slots v-model="endereco_visualizado.cep" mask="#####-###" label="CEP *" counter maxlength="9" dense :rules="[ 
+                                val => val && val.length > 0 || 
+                                'Obrigatório'
+                            ]">     
+                        
+                                <template v-slot:after>
+                                  <q-btn disable color="primary" @click="validar_cep(endereco_visualizado.cep)" round dense flat icon="place" />
+                                </template>
+                            </q-input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="q-pa-xs col-8">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.logradouro" 
+                                label="Endereço *" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                        <div class="q-pa-xs col-4">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.tipo" 
+                                label="Tipo *" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="q-pa-xs col-10">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.bairro" 
+                                label="Bairro *" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                        <div class="q-pa-xs col-2">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.numero" 
+                                label="Numero ou S/N*" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="q-pa-xs col-6">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.complemento" 
+                                label="Complemento"
+                            />
+                        </div>
+                        <div class="q-pa-xs col-4">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.localidade" 
+                                label="Cidade *" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                        <div class="q-pa-xs col-2">
+                            <q-input disable
+                                outlined 
+                                dense
+                                v-model="endereco_visualizado.uf" 
+                                label="UF *" 
+                                :rules="[ 
+                                    val => val && val.length > 0 || 
+                                    'Obrigatório'
+                                ]"
+                            />
+                        </div>
+                    </div>
+                </q-form>
+                <q-card-actions class="row text-primary">
+                    <q-space />
+                    <q-btn @click="showDialogVisualizaEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
+                </q-card-actions>  
+            </q-card>
+        </q-dialog>
+
         <q-dialog v-model="showDialogDeleteEndereco" persistent>
             <q-card
-              style="width: 600px; max-width: 80vw;"
+              style="width: 550px; max-width: 80vw;"
             >
                 <q-card-section>
                     <h6>O endereco selecionado será excluído. Confirmar ação?</h6>
                 </q-card-section>
-                <q-card-actions class="row text-primary">
+                <q-card-actions class="row text-blue-5">
                     <q-space />
-                    <q-btn @click="showDialogDeleteEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
-                    <q-btn @click="confirmDeleteEndereco()" style=" width: 150px;" color="primary" label="Confirmar" />
+                    <q-btn @click="showDialogDeleteEndereco = false" outline style=" width: 150px;" label="VOLTAR" />
+                    <q-btn @click="confirmDeleteEndereco()" style=" width: 150px;" color="blue-5" label="Confirmar" />
+                </q-card-actions>  
+            </q-card>
+        </q-dialog>
+
+        <q-dialog v-model="showDialogDeleteUsuario" persistent>
+            <q-card
+              style="width: 550px; max-width: 80vw;"
+            >
+                <q-card-section>
+                    <h6>O usuário - {{ usuario_delete.name }} -   será excluído. Confirmar ação?</h6>
+                </q-card-section>
+                <q-card-actions class="row text-blue-5">
+                    <q-space />
+                    <q-btn @click="showDialogDeleteUsuario = false" outline style=" width: 150px;" label="VOLTAR" />
+                    <q-btn @click="confirmDeleteUsuario" style=" width: 150px;" color="blue-5" label="Confirmar" />
                 </q-card-actions>  
             </q-card>
         </q-dialog>
 
         <q-dialog v-model="showDialogNovoEndereco" persistent>
-            <q-card
+            <q-card class="q-pa-md"
               style="width: 1000px; max-width: 80vw;"
             >
                 <div class="title q-pa-sm">
@@ -25,7 +155,7 @@
                 </div>
                 <q-form class="q-gutter-md">
                     <div class="row">
-                        <div class="q-pa-sm col-4">
+                        <div class="q-pa-xs col-4">
                             <q-input outlined bottom-slots v-model="novo_endereco.cep" mask="#####-###" label="CEP *" counter maxlength="9" dense :rules="[ 
                                 val => val && val.length > 0 || 
                                 'Obrigatório'
@@ -38,7 +168,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="q-pa-sm col-8">
+                        <div class="q-pa-xs col-8">
                             <q-input 
                                 outlined 
                                 dense
@@ -50,7 +180,7 @@
                                 ]"
                             />
                         </div>
-                        <div class="q-pa-sm col-4">
+                        <div class="q-pa-xs col-4">
                             <q-input 
                                 outlined 
                                 dense
@@ -64,7 +194,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="q-pa-sm col-10">
+                        <div class="q-pa-xs col-10">
                             <q-input 
                                 outlined 
                                 dense
@@ -76,12 +206,12 @@
                                 ]"
                             />
                         </div>
-                        <div class="q-pa-sm col-2">
+                        <div class="q-pa-xs col-2">
                             <q-input 
                                 outlined 
                                 dense
                                 v-model="novo_endereco.numero" 
-                                label="Numero *" 
+                                label="Numero ou S/N*" 
                                 :rules="[ 
                                     val => val && val.length > 0 || 
                                     'Obrigatório'
@@ -90,19 +220,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="q-pa-sm col-6">
+                        <div class="q-pa-xs col-6">
                             <q-input 
                                 outlined 
                                 dense
                                 v-model="novo_endereco.complemento" 
-                                label="Complemento *" 
-                                :rules="[ 
-                                    val => val && val.length > 0 || 
-                                    'Obrigatório'
-                                ]"
+                                label="Complemento"
                             />
                         </div>
-                        <div class="q-pa-sm col-4">
+                        <div class="q-pa-xs col-4">
                             <q-input 
                                 outlined 
                                 dense
@@ -114,7 +240,7 @@
                                 ]"
                             />
                         </div>
-                        <div class="q-pa-sm col-2">
+                        <div class="q-pa-xs col-2">
                             <q-input 
                                 outlined 
                                 dense
@@ -128,10 +254,10 @@
                         </div>
                     </div>
                 </q-form>
-                <q-card-actions class="row text-primary">
+                <q-card-actions class="row text-blue-5">
                     <q-space />
-                    <q-btn @click="showDialogNovoEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
-                    <q-btn @click="clickSalvarNovoEndereco" style=" width: 150px;" color="primary" label="Salvar" />
+                    <q-btn @click="showDialogNovoEndereco = false" outline style=" width: 150px;" label="VOLTAR" />
+                    <q-btn @click="confirmSalvarNovoEndereco" style=" width: 150px;" color="blue-5" label="Salvar" />
                 </q-card-actions>  
             </q-card>
         </q-dialog>
@@ -140,10 +266,6 @@
             <q-card
               style="width: 1000px; max-width: 80vw;"
             >
-                <div class="title q-pa-md">
-                    <div class="text-h6">Endereços</div>
-                    <div class="text-subtitle2">Lista dos endereços de {{user_enderecos.name}}</div>
-                </div>
                 <div class="q-pa-md">
                     <q-table
                     flat bordered 
@@ -151,6 +273,7 @@
                     :rows="user_enderecos.addresses" 
                     :columns="columnsEndereco" 
                     row-key="id" 
+                    table-header-class="bg-blue-5 text-white"
                     >
                         <template v-slot:body="props">
                             <q-tr :props="props">
@@ -164,34 +287,35 @@
                                     {{ props.row.logradouro }}
                                 </q-td>
                                 <q-td key="actions" :props="props">
-                                    <q-btn icon="delete" @click="openDialogDeleteEndereco(props.row)"></q-btn>
+                                    <q-btn color="blue-5" class="q-mr-md" size="sm" icon="visibility" @click="openDialogVisualizaEndereco(props.row)"></q-btn>
+                                    <q-btn color="red-5" class="q-mr-md" size="sm" icon="delete" @click="openDialogDeleteEndereco(props.row)"></q-btn>
                                 </q-td>
                             </q-tr>
                         </template>
                         <template v-slot:top>
+                            <div class="title q-pa-xs">
+                                <div class="text-h6">Endereços</div>
+                                <div class="text-subtitle2">Lista dos endereços de {{user_enderecos.name}}</div>
+                            </div>
                             <q-space />
-                            <q-btn color="primary" label="NOVO ENDEREÇO"  @click="openDialogNovoEndereco()"/>
+                            <q-btn color="blue-5" label="NOVO ENDEREÇO"  @click="openDialogNovoEndereco()"/>
                         </template>
                     </q-table>
                 </div>
-                <q-card-actions class="row text-primary" style="padding-left: 15px; padding-right: 15px;">
+                <q-card-actions class="row text-blue-5" style="padding-left: 15px; padding-right: 15px;">
                     <q-space />
-                    <q-btn @click="showDialogListaEndereco = false" outline style=" width: 150px; color: primary;" label="VOLTAR" />
+                    <q-btn @click="showDialogListaEndereco = false" outline style=" width: 150px;" label="VOLTAR" />
                 </q-card-actions>     
             </q-card>
         </q-dialog>
 
         <div class="q-pa-xl">
-            <div class="title q-py-xl">
-                <div class="text-h6">Usuários</div>
-                <div class="text-subtitle2">Cadastrado de usuários</div>
-            </div>
-
             <q-table
-             bordered 
-            :rows="usuarioStore.getUsuarios" 
-            :columns="columns" 
-            row-key="id" 
+            flat
+                :rows="usuarioStore.getUsuarios" 
+                :columns="columns" 
+                row-key="id" 
+                table-header-class="bg-blue-5 text-white"
             >
                 <template v-slot:body="props">
                     <q-tr :props="props">
@@ -205,14 +329,21 @@
                             {{ props.row.email }}
                         </q-td>
                         <q-td key="actions" :props="props">
-                            <q-btn round icon="mode_edit" @click="$router.push(`/usuarios/edita/${props.row.id}`)"></q-btn>
-                            <q-btn round icon="map" @click="openDialogListarEndereco(props.row)"></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="add_location_alt" @click="openDialogListarEndereco(props.row)"></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="mode_edit" @click="$router.push(`/usuarios/edita/${props.row.id}`)"></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="visibility" @click="$router.push(`/usuarios/visualiza/${props.row.id}`)"></q-btn>
+                            <q-btn color="blue-5" class="q-mr-md" size="sm" round icon="delete" @click="openDialogDeleteUsuario(props.row)"></q-btn>
+
                         </q-td>
                     </q-tr>
                 </template>
                 <template v-slot:top>
+                    <div class="title q-py-xl">
+                        <div class="text-h5">Usuários</div>
+                        <div class="text-subtitle2">Usuários cadastrados no sistema</div>
+                    </div>        
                     <q-space />
-                    <q-btn color="primary" label="NOVO USUÁRIO"  @click="$router.push('/usuarios/novo')"/>
+                    <q-btn color="blue-5" label="NOVO USUÁRIO"  @click="$router.push('/usuarios/novo')"/>
                 </template>
             </q-table>
         </div>
@@ -239,6 +370,8 @@ export default {
             showDialogListaEndereco: false,
             showDialogNovoEndereco: false,
             showDialogDeleteEndereco: false,
+            showDialogDeleteUsuario: false,
+            showDialogVisualizaEndereco: false,
 
             user_enderecos: {},
 
@@ -274,6 +407,12 @@ export default {
             ],
 
             endereco_delete: {},
+
+            usuario_delete: {},
+
+            messageError: '',
+
+            endereco_visualizado: {},
         }   
     },
 
@@ -282,10 +421,8 @@ export default {
     },
 
     methods: {
-        async clickSalvarNovoEndereco(){
-            // const response_cep = await this.addressStore.validarCEP(this.novo_endereco.cep)
-
-            if(await this.validar_cep(this.novo_endereco.cep)){
+        async confirmSalvarNovoEndereco(){
+            if(await this.validar_cep(this.novo_endereco.cep) &&  await this.validarCamposEndereco(this.novo_endereco)){
                 const dados_endereco = {
                     ...this.novo_endereco,
                     user_id: this.user_enderecos.id,
@@ -304,8 +441,49 @@ export default {
                 } else {
                     alert('nao deu pra adicionar')
                 }
-            } 
+            } else {
+                alert(this.messageError)
+            }
         },  
+
+        validarCamposEndereco(endereco){
+            if((endereco.cep === '') || endereco.cep === null || endereco.cep.length <= 0){
+                this.messageError = 'Informe uma CEP válido';
+                return false;
+            }
+
+            if((endereco.logradouro === '') || endereco.logradouro === null || endereco.logradouro.length <= 0){
+                this.messageError = 'Informe um Endereço válido';
+                return false;
+            }
+
+            if((endereco.tipo === '') || endereco.tipo === null || endereco.tipo.length <= 0){
+                this.messageError = 'Informe um Tipo válido';
+                return false;
+            }
+
+            if((endereco.bairro === '') || endereco.bairro === null || endereco.bairro.length <= 0){
+                this.messageError = 'Informe um Bairro válido';
+                return false;
+            }
+
+            if((endereco.numero === '') || endereco.numero === null || endereco.numero.length <= 0){
+                this.messageError = 'Informe um Número válido';
+                return false;
+            }
+
+            if((endereco.localidade === '') || endereco.localidade === null || endereco.localidade.length <= 0){
+                this.messageError = 'Informe uma Cidade válida';
+                return false;
+            }
+
+            if((endereco.uf === '') || endereco.uf === null || endereco.uf.length <= 0 || endereco.uf.length > 2){
+                this.messageError = 'Informe um UF válido';
+                return false;
+            }
+
+            return true
+        },
 
         async validar_cep(cep){
             const response_cep = await this.addressStore.validarCEP(cep);
@@ -374,6 +552,30 @@ export default {
                 alert('Error ao excluir endereço')
             }
         },
+
+        openDialogDeleteUsuario(usuario){
+            this.usuario_delete = {...usuario}
+
+            this.showDialogDeleteUsuario = true
+        },
+
+        async confirmDeleteUsuario(){
+            const response = await this.usuarioStore.delete(this.usuario_delete.id);
+
+            if(response.status == 201){
+                await this.usuarioStore.loadUsuarios();
+
+                this.showDialogDeleteUsuario = false
+            } else {
+                alert('Error ao excluir endereço')
+            }
+        },
+
+        openDialogVisualizaEndereco(endereco){
+            this.endereco_visualizado = {...endereco}
+
+            this.showDialogVisualizaEndereco = true
+        }
     }
 }
 

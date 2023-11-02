@@ -12,7 +12,7 @@ class AddressModel(db.Model):
     numero      = db.Column(db.String(80), nullable=False)
     localidade  = db.Column(db.String(80), nullable=False)
     logradouro  = db.Column(db.String(80), nullable=False)
-    complemento = db.Column(db.String(80), nullable=False)
+    complemento = db.Column(db.String(80))
     user_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 

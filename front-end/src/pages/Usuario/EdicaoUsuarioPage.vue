@@ -131,10 +131,10 @@
             </q-form>
         </q-card-section>
 
-        <q-card-actions class="row text-primary" style="padding-left: 25px; padding-right: 25px;">
+        <q-card-actions class="row text-blue-5" style="padding-left: 25px; padding-right: 25px;">
             <q-space />
-            <q-btn @click="clickCancel" outline style=" width: 150px; color: primary;" label="Cancelar" />
-            <q-btn @click="clickSubmit" style=" width: 150px;" color="primary" label="Salvar" />
+            <q-btn @click="clickCancel" outline style=" width: 150px;" label="Cancelar" />
+            <q-btn @click="clickSubmit" style=" width: 150px;" color="blue-5" label="Salvar" />
           </q-card-actions>
     </q-page>
 </template>
@@ -191,17 +191,11 @@ export default {
             if(await this.validarFormulario_NovoUsuario()){
                 let response = await this.usuarioStore.update(this.dadosUsuario)
 
-                this.$router.push('/usuarios')
-
-                // aqui
-                // console.log(response)
-                // console.log(response.status)
-                // if(response.status === 201){
-                //     this.$router.push('/usuarios')
-                // } else {
-                //     alert('Deu ruim')
-                //     console.log(response)
-                // }
+                if(response.status === 200){
+                    this.$router.push('/usuarios')
+                } else {
+                    alert(response.data.message)
+                }
             } else {
                 alert(this.messageError)
             }

@@ -62,8 +62,9 @@ class Address(Resource):
 
         if address_data:
             address_data.delete_from_db()
-        
-        return {'message': 'Registro excluido com sucesso'}, 201
+            return {'message': 'Registro excluido com sucesso'}, 201
+
+        return {'message', ITEM_NOT_FOUND}, 404
 
 class AddressList(Resource):
     def get(self):

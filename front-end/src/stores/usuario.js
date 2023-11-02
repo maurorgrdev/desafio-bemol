@@ -61,7 +61,7 @@ export const useUsuarioStore = defineStore("usuario", {
                 }
                 const response = await api.post(`/users`, request)
 
-                return response.data
+                return response
             } catch (error) {
                 return error.response
             }
@@ -76,14 +76,11 @@ export const useUsuarioStore = defineStore("usuario", {
                     data_nascimento: data_nascimento_formated,
                 }
 
-                console.log(request);
-                console.log('hehe');
-
                 const response = await api.put(`/users/${data.id}`, request)
 
-                return response
+                return response.data
             } catch (error) {
-                alert(error)
+                return error.response
             }
         },
 
@@ -91,9 +88,9 @@ export const useUsuarioStore = defineStore("usuario", {
             try {
                 const result = await api.delete(`/users/${id}`)
 
-                return result.data
+                return result
             } catch (error) {
-                alert(error)
+                return error.response
             }
         }
     }

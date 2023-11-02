@@ -2,8 +2,12 @@
     <q-page>
         <q-card-section>
             <q-form class="q-gutter-md">
+                <div class="title q-pa-md">
+                    <div class="text-h6">Cadastro de Usuário</div>
+                    <div class="text-subtitle2">Cadastrando novo usuário dentro do sistema</div>
+                </div> 
                 <div class="row">
-                    <div class="q-pa-sm col-12">
+                    <div class="q-pa-xs col-12">
                         <q-input 
                             outlined 
                             dense
@@ -17,7 +21,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="q-pa-sm col-4">
+                    <div class="q-pa-xs col-4">
                         <q-input 
                             outlined 
                             dense
@@ -30,7 +34,7 @@
                             mask="###.###.###-##"
                         />
                     </div>
-                    <div class="q-pa-sm col-4">
+                    <div class="q-pa-xs col-4">
                         <q-input dense outlined label="Data nascimento *" v-model="dadosUsuario.data_nascimento" mask="##/##/####">
                             <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
@@ -43,20 +47,11 @@
                                 </q-popup-proxy>
                                 </q-icon>
                             </template>
-                        </q-input>            
-                        <!-- <q-input dense outlined v-model="dadosUsuario.data_nascimento"  :rules="['date']">
-                            <template v-slot:append>
-                              <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                                  <q-date mask="DD/MM/YYYY" v-model="dadosUsuario.data_nascimento" @input="() => $refs.qDateProxy.hide()" ></q-date>
-                                </q-popup-proxy>
-                              </q-icon>
-                            </template>
-                          </q-input> -->
+                        </q-input>      
                     </div>
                 </div>
                 <div class="row">
-                    <div class="q-pa-sm col-6">
+                    <div class="q-pa-xs col-6">
                         <q-input 
                             outlined 
                             dense
@@ -69,7 +64,7 @@
                             ]"
                         />
                     </div>
-                    <div class="q-pa-sm col-6">
+                    <div class="q-pa-xs col-6">
                         <q-input 
                             outlined 
                             dense
@@ -84,7 +79,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="q-pa-sm col-6">
+                    <div class="q-pa-xs col-6">
                         <q-input 
                             outlined 
                             dense
@@ -106,7 +101,7 @@
                         </q-input>
 
                     </div>
-                    <div class="q-pa-sm col-6">
+                    <div class="q-pa-xs col-6">
                         <q-input 
                             outlined 
                             dense
@@ -131,10 +126,10 @@
             </q-form>
         </q-card-section>
 
-        <q-card-actions class="row text-primary" style="padding-left: 25px; padding-right: 25px;">
+        <q-card-actions class="row text-blue-5" style="padding-left: 25px; padding-right: 25px;">
             <q-space />
-            <q-btn @click="clickCancel" outline style=" width: 150px; color: primary;" label="Cancelar" />
-            <q-btn @click="clickSubmit" style=" width: 150px;" color="primary" label="Salvar" />
+            <q-btn @click="clickCancel" outline style=" width: 150px;" label="Cancelar" />
+            <q-btn @click="clickSubmit" style=" width: 150px;" color="blue-5" label="Salvar" />
           </q-card-actions>
     </q-page>
 </template>
@@ -180,19 +175,13 @@ export default {
 
         async clickSubmit(){
             if(await this.validarFormulario_NovoUsuario()){
-                let response = this.usuarioStore.create(this.dadosUsuario)
+                let response = await this.usuarioStore.create(this.dadosUsuario)
 
-                this.$router.push('/usuarios')
-
-                // aqui
-                // console.log(response)
-                // console.log(response.status)
-                // if(response.status === 201){
-                //     this.$router.push('/usuarios')
-                // } else {
-                //     alert('Deu ruim')
-                //     console.log(response)
-                // }
+                if(response.status === 201){
+                    this.$router.push('/usuarios')
+                } else {
+                    alert(response.data.message)
+                }
             } else {
                 alert(this.messageError)
             }

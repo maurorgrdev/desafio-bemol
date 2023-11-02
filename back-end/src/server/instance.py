@@ -19,17 +19,17 @@ class Server():
         self.check_cep_ns = self.check_cep_ns()
 
     def user_ns(self, ):
-        return self.api.namespace(name='User', description='users realeted operations', path='/')
+        return self.api.namespace(name='User', description='users realeted operations')
     
     def address_ns(self, ):
-        return self.api.namespace(name='Address', description='address realeted operations', path='/')
+        return self.api.namespace(name='Address', description='address realeted operations')
     
     def check_cep_ns(self, ):
-        return self.api.namespace(name='Check Cep', description='check_cep realeted operations', path='/')
+        return self.api.namespace(name='Check Cep', description='check_cep realeted operations')
 
     def run(self, ):
         self.app.run(
-            port=9000,
+            port=8000,
             debug=True,
             host='0.0.0.0'
         )
