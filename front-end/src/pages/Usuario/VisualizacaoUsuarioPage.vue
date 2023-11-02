@@ -117,6 +117,10 @@
         
         <q-card-section>
             <q-form class="q-gutter-md">
+                <div class="title q-pa-md">
+                    <div class="text-h6">Visualização de Usuário</div>
+                    <div class="text-subtitle2">Visualizando usuário cadastrado no sistema</div>
+                </div> 
                 <div class="row">
                     <div class="q-pa-sm col-12">
                         <q-input 
@@ -160,16 +164,7 @@
                                 </q-popup-proxy>
                                 </q-icon>
                             </template>
-                        </q-input>            
-                        <!-- <q-input dense outlined v-model="dadosUsuario.data_nascimento"  :rules="['date']">
-                            <template v-slot:append>
-                              <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                                  <q-date mask="DD/MM/YYYY" v-model="dadosUsuario.data_nascimento" @input="() => $refs.qDateProxy.hide()" ></q-date>
-                                </q-popup-proxy>
-                              </q-icon>
-                            </template>
-                          </q-input> -->
+                        </q-input>    
                     </div>
                 </div>
                 <div class="row">

@@ -120,7 +120,7 @@
               style="width: 550px; max-width: 80vw;"
             >
                 <q-card-section>
-                    <h6>O endereco selecionado será excluído. Confirmar ação?</h6>
+                    <h6>O endereço selecionado será excluído. Confirmar ação?</h6>
                 </q-card-section>
                 <q-card-actions class="row text-blue-5">
                     <q-space />

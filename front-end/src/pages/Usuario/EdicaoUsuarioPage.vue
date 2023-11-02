@@ -2,6 +2,10 @@
     <q-page>
         <q-card-section>
             <q-form class="q-gutter-md">
+                <div class="title q-pa-md">
+                    <div class="text-h6">Edição de Usuário</div>
+                    <div class="text-subtitle2">Editando usuário no sistema</div>
+                </div> 
                 <div class="row">
                     <div class="q-pa-sm col-12">
                         <q-input 

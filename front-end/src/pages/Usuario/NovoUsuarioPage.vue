@@ -4,7 +4,7 @@
             <q-form class="q-gutter-md">
                 <div class="title q-pa-md">
                     <div class="text-h6">Cadastro de Usuário</div>
-                    <div class="text-subtitle2">Cadastrando novo usuário dentro do sistema</div>
+                    <div class="text-subtitle2">Cadastrando novo usuário no sistema</div>
                 </div> 
                 <div class="row">
                     <div class="q-pa-xs col-12">
