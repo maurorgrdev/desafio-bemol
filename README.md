@@ -3,23 +3,21 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Desafio Bemol - Lista de usuários</h3>
+<h3 align="center">Desafio Bemol - Street</h3>
 
 
 ---
 
-<p align="center"> Projeto desenvolvido para o desafio Bemol. A feature consiste no cadastro de usuários e endereços.
-    <br> 
-</p>
-
-## 🧐 Sobre <a name = "about"></a>
-
-Desenvolver e implementar a feature de Cadastro de Usuários, software Web, com acesso a consulta de CEP de uma API externa. O sistema contará com as seguintes camada: Interface (front-end), Regras de negócio (back-end) e Banco de Dados.
 
 ## 📝 Índice
 
+- [Sobre Started](#about)
 - [Getting Started](#getting_started)
 - [Authors](#authors)
+
+## 🧐 Sobre <a name = "about"></a>
+
+Projeto desenvolvido para o desafio Bemol, consiste em desenvolver e implementar a feature de Cadastro de Usuários, software Web, com acesso a consulta de CEP de uma API externa. O sistema contará com as seguintes camada: Interface (front-end), Regras de negócio (back-end) e Banco de Dados.
 
 - ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -119,49 +117,55 @@ A Lista de Tarefas deverá aparecer no seu navegador.
 ---
 ---
 
--  **Diagrama de Visualização da Arquitetura**
+## Diagrama de notacao C4 MODEL <a name = "diagrama"></a>
 
-#### Modelo do diagrama notação C4
+#### Modelo Diagrama Visualização da Arquitetura C4:
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/documentação/Visualização%20da%20arquitetura.drawio.png)
 _Imagem 01 - Diagrama Visualização da Arquitetura_
 
--  **Diagrama Design da Solução**
----
----
-#### Modelo do diagrama notação C4:
+
+#### Modelo Diagrama Design da Solução:
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/documentação/Design%20de%20solucao.drawio.png)
-_Imagem 02 - Diagrama Design da Solucao_
+_Imagem 02 - Diagrama Design da Solução_
 
 --- 
 ---
 
--  **Layout da Aplicação**
+## Layout da Aplicação**
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/01%20-%20Listagem%20de%20Usuarios.png)
 _Imagem 03 - Listagem de Usuários_
 
+
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/02%20-%20Cadastro%20de%20Usuario.png)
 _Imagem 04 - Cadastro de Usuário_
+
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/03%20-%20Edicao%20de%20Usuario.png)
 _Imagem 05 - Edição de Usuário_
 
+
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/04%20-%20Exclusao%20de%20Usuario.png)
 _Imagem 06 - Exclusão de Usuário_
+
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/05%20-Listagem%20de%20Endereco.png)
 _Imagem 07 - Listagem de Endereços_
 
+
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/06%20-%20Novo%20Endereco.png)
 _Imagem 08 - Cadastro de Endereço_
+
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/07%20-%20Visualizacao%20de%20Endereco.png)
 _Imagem 09 - Visualização de Endereço_
 
+
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/08%20-%20Excluir%20Endereco.png)
 _Imagem 10 - Exclusão de Endereço_
+
 
 ![](https://github.com/maurorgrdev/desafio-bemol/blob/master/imagens/09%20-%20Visualizacao%20de%20Usuario.png)
 _Imagem 11 - Visualização de Usuario
