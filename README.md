@@ -25,7 +25,7 @@ Instruções para ter uma cópia do repositório.
 
 -   **Python - Supported Versions:** >= 3.10
 -   **Database:** MySQL
--   **Run-time environment:**: Node.js, npm & Quasar Framework
+-   **Run-time environment:**: Flask, npm & Quasar Framework
 
 ### Instalação
 
