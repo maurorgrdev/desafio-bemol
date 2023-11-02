@@ -14,7 +14,6 @@
 
 ## 📝 Índice
 
-- [Sobre](#about)
 - [Getting Started](#getting_started)
 - [Authors](#authors)
 
