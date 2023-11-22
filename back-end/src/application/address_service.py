@@ -1,25 +1,24 @@
-# from domain.models import user
-from insfrastructure.repository.user_repository import UserRepository
+from insfrastructure.repository.address_repository import AddressRepository
 from flask import request, json, Response
 from flask_restx import Resource, fields
-from domain.schemas.user import UserSchema
+from domain.schemas.address import AddressSchema
 
-user_repository = UserRepository()
-user_schema = UserSchema()
-user_list_schema = UserSchema(many=True)
+address_repository = AddressRepository()
+address_schema = AddressSchema()
+address_list_schema = AddressSchema(many=True)
 
-ITEM_NOT_FOUND = 'User not found'
+ITEM_NOT_FOUND = 'Address not found'
 
-class UserService:
+class AddressService:
 
     def find_by_id(self, id: int):
-        user_data = user_repository.find_by_id(id)
+        address_data = address_repository.find_by_id(id)
 
-        if user_data:
-            user_load = user_schema.dump(user_data)
+        if address_data:
+            address_load = address_schema.dump(address_data)
             return Response(
                 response=json.dumps({
-                    "data": user_load
+                    "data": address_load
                 }),
                 status=200,
                 mimetype="application/json"
@@ -34,22 +33,22 @@ class UserService:
         )
 
     def update(self, request, id: int):
-        user_data = user_repository.find_by_id(id)
-        user_json = request.get_json()
+        address_data = address_repository.find_by_id(id)
+        address_json = request.get_json()
 
-        user_data.cpf              = user_json['cpf'             ]
-        user_data.name             = user_json['name'            ]
-        user_data.email            = user_json['email'           ]
-        user_data.password         = user_json['password'        ]
-        user_data.confirm_email    = user_json['confirm_email'   ]
-        user_data.confirm_password = user_json['confirm_password']
-        user_data.data_nascimento  = user_json['data_nascimento']
+        address_data.uf          = address_json['uf'         ]
+        address_data.cep         = address_json['cep'        ]
+        address_data.tipo        = address_json['tipo'       ]
+        address_data.bairro      = address_json['bairro'     ]
+        address_data.numero      = address_json['numero'     ]
+        address_data.logradouro  = address_json['logradouro' ]
+        address_data.localidade  = address_json['localidade' ]
+        address_data.complemento = address_json['complemento']
+        address_data.user_id     = address_json['user_id']
         
-        
-
         try:
-            result_validation = user_schema.validate(user_json)
-            user_repository.save_to_db(user_data)
+            result_validation = address_schema.validate(address_json)
+            address_repository.save_to_db(address_data)
         except:
             return Response(
                 response=json.dumps({
@@ -68,9 +67,9 @@ class UserService:
         )
 
     def delete(self, id: int):
-        user_data = user_repository.find_by_id(id)
+        address_data = address_repository.find_by_id(id)
 
-        if not user_data:
+        if not address_data:
             return Response(
                 response=json.dumps({
                     "message": ITEM_NOT_FOUND
@@ -79,7 +78,7 @@ class UserService:
                 mimetype="application/json"
             )
         
-        user_repository.delete_from_db(user_data),
+        address_repository.delete_from_db(address_data),
 
         return Response(
             response=json.dumps({
@@ -92,19 +91,19 @@ class UserService:
     def find_all(self):
         return Response(
             response=json.dumps({
-                "data": user_list_schema.dump(user_repository.find_all())
+                "data": address_list_schema.dump(address_repository.find_all())
             }),
             status=200,
             mimetype="application/json"
         )
 
     def store(self, request):
-        user_json = request.get_json()
+        address_json = request.get_json()
 
         try:
-            result_validation = user_schema.validate(user_json)
-            user_data = user_schema.load(user_json)
-            user_repository.save_to_db(user_data)
+            result_validation = address_schema.validate(address_json)
+            address_data = address_schema.load(address_json)
+            address_repository.save_to_db(address_data)
         except:
             return Response(
                 response=json.dumps({

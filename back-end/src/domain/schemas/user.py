@@ -1,6 +1,6 @@
 from ma import ma
 from domain.models.user import UserModel
-from insfrastructure.schemas.address import AddressSchema
+from domain.schemas.address import AddressSchema
 from marshmallow import fields, validate, validates, ValidationError, validates_schema
 from datetime import date
 

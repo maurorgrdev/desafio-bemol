@@ -540,7 +540,7 @@ export default {
         async confirmDeleteEndereco(){
             const response = await this.addressStore.delete(this.endereco_delete.id);
 
-            if(response.status == 201){
+            if(response.status == 200){
                 await this.usuarioStore.loadUsuario(this.user_enderecos.id);
 
                 this.user_enderecos = {

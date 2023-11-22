@@ -29,32 +29,14 @@ class CheckCep:
 
         ufs_authorized = ['AM']
 
-        # print(cep_json)
-        # return cep_json
         hehe = requests.get(f"https://viacep.com.br/ws/{cep_json['cep']}/json/")
 
         if hehe.status_code == 400:
             return {'message': 'CEP inválido'}, 401
         address_cep = hehe.json()
-        # return  address_cep['uf']
-        if address_cep['uf'] in ufs_authorized:
-            # cepModelView = CepModelView(
-            #     address_cep['uf'], address_cep['cep'], address_cep['gia'], address_cep['ddd'], address_cep['ibge'],
-            #     address_cep['siafi'], address_cep['bairro'], address_cep['logradouro'], address_cep['localidade'],  address_cep['complemento']
-            # )
-            # cepModelView.uf          = address_cep['uf']
-            # cepModelView.cep         = address_cep['cep']
-            # cepModelView.gia         = address_cep['gia']
-            # cepModelView.ddd         = address_cep['ddd']
-            # cepModelView.ibge        = address_cep['ibge']
-            # cepModelView.siafi       = address_cep['siafi']
-            # cepModelView.bairro      = address_cep['bairro']
-            # cepModelView.logradouro  = address_cep['logradouro']
-            # cepModelView.localidade  = address_cep['localidade']
-            # cepModelView.complemento = address_cep['complemento']
 
-            # cepModelView = json.dumps(cepModelView)
-            # print(cep_json)
+        if address_cep['uf'] in ufs_authorized:
+
             return {
                 'uf'     : address_cep['uf'],
                 'cep'    : address_cep['cep'],
