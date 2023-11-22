@@ -15,17 +15,8 @@ class AddressModel(db.Model):
     complemento = db.Column(db.String(80))
     user_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-
-    def __init__(self, cep, logradouro, bairro, localidade, uf, tipo, numero, complemento, user_id):
-        self.cep         = cep
-        self.uf          = uf
-        self.tipo        = tipo
-        self.bairro      = bairro
-        self.numero      = numero
-        self.logradouro  = logradouro
-        self.localidade  = localidade
-        self.complemento = complemento
-        self.user_id     = user_id
+    def __init__(self, **kwargs):
+        super(AddressModel, self).__init__(**kwargs)
 
     def __repr__(self) -> str:
         return f'AddressModel(cep={self.cep}, logradouro={self.logradouro}, bairro={self.bairro}, localidade={self.localidade}, uf={self.uf}, tipo={self.tipo}, numero={self.numero}, complemento={self.complemento}, user_id={self.user_id})'

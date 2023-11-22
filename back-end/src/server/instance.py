@@ -12,7 +12,7 @@ class Server():
 
         self.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/street'
         self.app.config['PROPAGATE_EXCEPTIONS'] = True
-        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False        
 
         self.user_ns = self.user_ns()
         self.address_ns = self.address_ns()
@@ -26,7 +26,7 @@ class Server():
     
     def check_cep_ns(self, ):
         return self.api.namespace(name='Check Cep', description='check_cep realeted operations')
-
+    
     def run(self, ):
         self.app.run(
             port=8000,

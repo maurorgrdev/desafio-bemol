@@ -562,7 +562,7 @@ export default {
         async confirmDeleteUsuario(){
             const response = await this.usuarioStore.delete(this.usuario_delete.id);
 
-            if(response.status == 201){
+            if(response.status == 200){
                 await this.usuarioStore.loadUsuarios();
 
                 this.showDialogDeleteUsuario = false

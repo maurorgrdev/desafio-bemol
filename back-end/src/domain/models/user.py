@@ -15,58 +15,20 @@ class UserModel(db.Model):
     confirm_password = db.Column(db.String(60), nullable=False, unique=False)
     data_nascimento  = db.Column(db.DateTime, nullable=False)
     addresses        = db.relationship(AddressModel, backref='users', cascade="delete", lazy=True)
-    
-    
-    def __init__(self, name, cpf, email, confirm_email, password, confirm_password, data_nascimento):
-        self.name = name
-        self.cpf = cpf
-        self.email = email
-        self.confirm_email = confirm_email
-        self.password = password
-        self.confirm_password = confirm_password
-        self.data_nascimento = data_nascimento
+
+    def __init__(self, **kwargs):
+        super(UserModel, self).__init__(**kwargs)
 
     def __repr__(self):
         return f'UserModel(name = {self.name}, cpf = {self.cpf}, email = {self.email}, confirm_email = {self.confirm_email}, password = {self.password}, confirm_password = {self.confirm_password}, data_nascimento={self.data_nascimento})'
     
     def json(self):
         return {
-            'name'   : self.name,
-            'cpf'    : self.cpf,
-            'email'  : self.email,
-            'confirm_email' : self.confirm_email,
-            'password' : self.password,
+            'name'             : self.name,
+            'cpf'              : self.cpf,
+            'email'            : self.email,
+            'confirm_email'    : self.confirm_email,
+            'password'         : self.password,
             'confirm_password' : self.confirm_password,
-            'data_nascimento': self.data_nascimento,
-        }
-
-    @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
-    
-    @classmethod
-    def find_by_id(cls, id):
-        return cls.query.filter_by(id=id).first()
-    
-    @classmethod
-    def find_by_email(cls, email):
-        return cls.query.filter_by(email=email).first()
-    
-    @classmethod
-    def find_by_cpf(cls, cpf):
-        return cls.query.filter_by(cpf=cpf).first()
-    
-    @classmethod
-    def find_all(cls):
-        return cls.query.all()
-    
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
-
-    
+            'data_nascimento'  : self.data_nascimento,
+        }    

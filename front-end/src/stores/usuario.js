@@ -35,7 +35,7 @@ export const useUsuarioStore = defineStore("usuario", {
             try {
                 const result = await api.get('/users')
 
-                this.usuarios = result.data
+                this.usuarios = result.data.data
             } catch (error) {
                 alert(error)
             }
@@ -45,7 +45,8 @@ export const useUsuarioStore = defineStore("usuario", {
             try {
                 const result = await api.get(`/users/${id}`)
 
-                this.usuario = result.data
+                console.log(result)
+                this.usuario = result.data.data
             } catch (error) {
                 alert(error)
             }
@@ -78,7 +79,7 @@ export const useUsuarioStore = defineStore("usuario", {
 
                 const response = await api.put(`/users/${data.id}`, request)
 
-                return response.data
+                return response
             } catch (error) {
                 return error.response
             }
